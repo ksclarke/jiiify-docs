@@ -19,6 +19,12 @@ Ruby code goes here
 ```
 {% endtab %}
 
+{% tab title="Python Code" %}
+```
+
+```
+{% endtab %}
+
 {% tab title="JSON Result" %}
 ```text
 JSON text goes here
@@ -26,5 +32,5 @@ JSON text goes here
 {% endtab %}
 {% endtabs %}
 
-Some wrapup text goes here...
+Some wrap-up text goes here...
 

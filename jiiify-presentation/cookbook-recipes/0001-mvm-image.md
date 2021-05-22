@@ -4,20 +4,20 @@ description: Simplest Manifest - Image
 
 # 0001-mvm-image
 
-There are two different ways to approach the [simplest manifest example](https://iiif.io/api/cookbook/recipe/0001-mvm-image/). One would be to preserve the intra-manifest IDs found in the example JSON file. The other would be just to create the IDs at the point of creating the manifest. I'm not sure of the use case for using existing IDs for a manifest that does not yet exist \(which is why we're creating it\), but I've included both examples below.
+There are two different ways to approach the [simplest manifest example](https://iiif.io/api/cookbook/recipe/0001-mvm-image/). One would be to preserve the intra-manifest IDs found in the example JSON file. The other would be just to create the IDs at the point of creating the manifest. I'm not sure of the use case for using existing IDs for a manifest that does not yet exist \(which is why we're creating it\), but both examples are included below.
 
 The first example creates the example manifest using Jiiify Presentation's ID minter. The [MinterFactory](https://javadoc.io/doc/info.freelibrary/jiiify-presentation-v3/latest/info/freelibrary/iiif/presentation/v3/ids/MinterFactory.html) comes with a default ID minter implementation, but this can be overridden to use a different minter if desired \(for instance, one that might generate IDs more like those found in the example JSON file\). Below is the code using the ID minter:
 
 {% tabs %}
 {% tab title="Java Code" %}
 ```text
-final String manifestID = "https://iiif.io/api/cookbook/recipe/0001-mvm-image/manifest";
-final String imageID = "http://iiif.io/api/presentation/2.1/example/fixtures/resources/page1-full.png";
+String manifestID = "https://iiif.io/api/cookbook/recipe/0001-mvm-image/manifest";
+String imageID = "http://iiif.io/api/presentation/2.1/example/fixtures/resources/page1-full.png";
 
-final Manifest manifest = new Manifest(manifestID, new Label("en", "Image 1"));
-final Minter minter = MinterFactory.getMinter(manifest);
-final Canvas canvas = new Canvas(minter).setWidthHeight(1200, 1800);
-final ImageContent imageContent = new ImageContent(imageID).setWidthHeight(1200, 1800);
+Manifest manifest = new Manifest(manifestID, new Label("en", "Image 1"));
+Minter minter = MinterFactory.getMinter(manifest);
+Canvas canvas = new Canvas(minter).setWidthHeight(1200, 1800);
+ImageContent imageContent = new ImageContent(imageID).setWidthHeight(1200, 1800);
 
 canvas.paintWith(minter, imageContent);
 manifest.setCanvases(canvas);
@@ -27,6 +27,10 @@ System.out.println(manifest);
 {% endtab %}
 
 {% tab title="Ruby Code" %}
+
+{% endtab %}
+
+{% tab title="Python Code" %}
 
 {% endtab %}
 
@@ -67,22 +71,22 @@ System.out.println(manifest);
 {% endtab %}
 {% endtabs %}
 
-Now for the example that uses the example JSON file's IDs instead of relying on the Jiiify Presentation's minter to generate IDs... this requires that we create the annotation and annotation page ourselves:
+The next example uses the example JSON file's IDs instead of relying on the Jiiify Presentation's minter to generate IDs. This requires the canvas' annotation and annotation page to be explicitly created:
 
 {% tabs %}
 {% tab title="Java Code" %}
 ```text
-final String manifestID = "https://iiif.io/api/cookbook/recipe/0001-mvm-image/manifest";
-final String canvasID = "https://iiif.io/api/cookbook/recipe/0001-mvm-image/canvas/p1";
-final String imageID = "http://iiif.io/api/presentation/2.1/example/fixtures/resources/page1-full.png";
-final String annoID = "https://iiif.io/api/cookbook/recipe/0001-mvm-image/annotation/p0001-image";
-final String annoPageID = "https://iiif.io/api/cookbook/recipe/0001-mvm-image/page/p1/1";
+String manifestID = "https://iiif.io/api/cookbook/recipe/0001-mvm-image/manifest";
+String canvasID = "https://iiif.io/api/cookbook/recipe/0001-mvm-image/canvas/p1";
+String imageID = "http://iiif.io/api/presentation/2.1/example/fixtures/resources/page1-full.png";
+String annoID = "https://iiif.io/api/cookbook/recipe/0001-mvm-image/annotation/p0001-image";
+String annoPageID = "https://iiif.io/api/cookbook/recipe/0001-mvm-image/page/p1/1";
 
-final Manifest manifest = new Manifest(manifestID, new Label("en", "Image 1"));
-final Canvas canvas = new Canvas(canvasID).setWidthHeight(1200, 1800);
-final ImageContent imageContent = new ImageContent(imageID).setWidthHeight(1200, 1800);
-final AnnotationPage<PaintingAnnotation> annoPage = new AnnotationPage<>(annoPageID);
-final PaintingAnnotation anno = new PaintingAnnotation(annoID, canvas);
+Manifest manifest = new Manifest(manifestID, new Label("en", "Image 1"));
+Canvas canvas = new Canvas(canvasID).setWidthHeight(1200, 1800);
+ImageContent imageContent = new ImageContent(imageID).setWidthHeight(1200, 1800);
+AnnotationPage<PaintingAnnotation> annoPage = new AnnotationPage<>(annoPageID);
+PaintingAnnotation anno = new PaintingAnnotation(annoID, canvas);
 
 annoPage.addAnnotations(anno.setBodies(imageContent).setTarget(canvasID));
 manifest.setCanvases(canvas.setPaintingPages(annoPage));
@@ -92,6 +96,10 @@ System.out.println(manifest);
 {% endtab %}
 
 {% tab title="Ruby Code" %}
+
+{% endtab %}
+
+{% tab title="Python Code" %}
 
 {% endtab %}
 
