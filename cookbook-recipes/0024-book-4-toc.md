@@ -20,7 +20,7 @@ Ruby code goes here
 {% endtab %}
 
 {% tab title="Python Code" %}
-```
+```text
 
 ```
 {% endtab %}

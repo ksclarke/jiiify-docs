@@ -136,7 +136,6 @@ System.out.println(manifest);
     } ]
   } ]
 }
-
 ```
 {% endtab %}
 {% endtabs %}
